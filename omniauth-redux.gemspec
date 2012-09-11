@@ -4,7 +4,7 @@ require File.expand_path('../lib/omniauth-redux/version', __FILE__)
 Gem::Specification.new do |gem|
   gem.add_dependency 'omniauth', '~> 1.0'
   gem.add_dependency 'faraday', '~> 0.7.5'
-  gem.add_dependency 'redux-client-ruby', '~> 0.3.4'
+  gem.add_dependency 'bbc_redux', '~> 0.3.4'
 
   gem.add_development_dependency 'yard'
 
