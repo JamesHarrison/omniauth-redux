@@ -1,0 +1,7 @@
+= OmniAuth::Redux
+
+A simple OmniAuth strategy for authenticating users against BBC's Redux system.
+
+    use OmniAuth::Builder do
+      provider :redux
+    end
