@@ -19,9 +19,9 @@ module OmniAuth
       def callback_phase
         begin
           redux_user
-        rescue InvalidDetails
+        rescue BBC::Redux::InvalidDetails
           fail!(:invalid_credentials)
-        rescue AccountLocked
+        rescue BBC::Redux::AccountLocked
           fail!(:account_locked)
         end
         return fail!(:invalid_credentials) if !redux_user
@@ -60,9 +60,9 @@ module OmniAuth
               @redux_user = auth_service.login username, password
             rescue BBC::Redux::Exceptions::UserNotFoundException, # Bad username
                    BBC::Redux::Exceptions::UserPasswordException # Bad password
-              raise InvalidDetails
+              raise BBC::Redux::InvalidDetails
             rescue BBC::Redux::Exceptions::ClientHttpException => e
-              raise AccountLocked if e.message =~ /^409/
+              raise BBC::Redux::AccountLocked if e.message =~ /^409/
             end
           end
           @redux_user
