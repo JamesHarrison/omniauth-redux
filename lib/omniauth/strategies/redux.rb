@@ -59,7 +59,7 @@ module OmniAuth
             return unless username && password
             @auth_service ||= BBC::Redux::Client.new
             begin
-              @redux_user = auth_service.login username, password
+              @redux_user = @auth_service.login username, password
             rescue BBC::Redux::Exceptions::UserNotFoundException, # Bad username
                    BBC::Redux::Exceptions::UserPasswordException # Bad password
               raise InvalidDetails
