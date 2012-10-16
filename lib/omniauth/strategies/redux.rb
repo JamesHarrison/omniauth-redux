@@ -4,7 +4,8 @@ require 'bbc_redux'
 module OmniAuth
   module Strategies
     class Redux
-      class InvalidDetails  < Exception; end       # Bad username or password
+      class InvalidUsername  < Exception; end
+      class InvalidPassword  < Exception; end
       class AccountLocked   < Exception; end       # Auth Service has locked account
       include OmniAuth::Strategy
 
@@ -21,8 +22,10 @@ module OmniAuth
       def callback_phase
         begin
           redux_user
-        rescue InvalidDetails
-          fail!(:invalid_credentials)
+        rescue InvalidUsername
+          fail!(:invalid_username)
+        rescue InvalidPassword
+          fail!(:invalid_password)
         rescue AccountLocked
           fail!(:account_locked)
         end
@@ -61,8 +64,9 @@ module OmniAuth
             begin
               @redux_user = @auth_service.login username, password
             rescue BBC::Redux::Exceptions::UserNotFoundException, # Bad username
-                   BBC::Redux::Exceptions::UserPasswordException # Bad password
-              raise InvalidDetails
+              raise InvalidUsername
+            rescue BBC::Redux::Exceptions::UserPasswordException # Bad password
+              raise InvalidPassword
             rescue BBC::Redux::Exceptions::ClientHttpException => e
               raise AccountLocked if e.message =~ /^409/
             end
@@ -73,3 +77,4 @@ module OmniAuth
     end
   end
 end
+
