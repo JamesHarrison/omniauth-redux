@@ -63,7 +63,7 @@ module OmniAuth
             @auth_service ||= BBC::Redux::Client.new
             begin
               @redux_user = @auth_service.login username, password
-            rescue BBC::Redux::Exceptions::UserNotFoundException, # Bad username
+            rescue BBC::Redux::Exceptions::UserNotFoundException # Bad username
               raise InvalidUsername
             rescue BBC::Redux::Exceptions::UserPasswordException # Bad password
               raise InvalidPassword
